@@ -1,16 +1,21 @@
 import { Component, OnInit } from "@angular/core";
-import { interval } from "rxjs";
+import { interval, Observable } from "rxjs";
+import { map } from "rxjs/operators";
+import { CurrentTimeStateService } from "./current-time-state.service";
 
 @Component({
   selector: "my-app",
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.css"]
 })
-export class AppComponent {
-  currentTime: Date = new Date();
-  currentTime$ = interval(1000);
+export class AppComponent implements OnInit {
+  currentTime$: Observable<Date> = this.currentTimeStateService.currentDate$;
+
+  constructor(private currentTimeStateService: CurrentTimeStateService) {}
 
   ngOnInit(): void {
-    this.currentTime$.subscribe((time) => this.currentTime = new Date());
+    interval(1000).subscribe(time =>
+      this.currentTimeStateService.updateCurrentDate(new Date())
+    );
   }
 }
