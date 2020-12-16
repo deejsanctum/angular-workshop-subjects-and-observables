@@ -1,4 +1,5 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
+import { interval } from "rxjs";
 
 @Component({
   selector: "my-app",
@@ -7,4 +8,9 @@ import { Component } from "@angular/core";
 })
 export class AppComponent {
   currentTime: Date = new Date();
+  currentTime$ = interval(1000);
+
+  ngOnInit(): void {
+    this.currentTime$.subscribe((time) => this.currentTime = new Date());
+  }
 }
