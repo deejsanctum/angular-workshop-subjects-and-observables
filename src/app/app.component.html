@@ -1,4 +1,4 @@
 <p>
   Current time:
 </p>
-<hello [currentTime]="currentTime$ | async"></hello>
+<span *ngIf="currentTime$ | async as currentTime">{{currentTime}}</span>
